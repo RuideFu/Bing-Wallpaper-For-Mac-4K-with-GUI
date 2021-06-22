@@ -23,7 +23,7 @@ class StatusMenuController: NSObject {
 
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
-        wallpaperAPI.fetchMeta(index: 1)
+        wallpaperAPI.fetchMeta(index: 1, language: "en")
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {

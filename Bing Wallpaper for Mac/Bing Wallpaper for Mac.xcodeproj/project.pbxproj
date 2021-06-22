@@ -15,6 +15,7 @@
 		78FDB81E2681A22800A47F78 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDB81D2681A22800A47F78 /* StatusMenuController.swift */; };
 		78FDB8222681A6E400A47F78 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78FDB8212681A6E400A47F78 /* MainMenu.xib */; };
 		78FDB8262681AC7500A47F78 /* GetWallpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDB8252681AC7500A47F78 /* GetWallpaper.swift */; };
+		78FDB828268204F300A47F78 /* wallpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDB827268204F300A47F78 /* wallpaper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		78FDB81D2681A22800A47F78 /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
 		78FDB8212681A6E400A47F78 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		78FDB8252681AC7500A47F78 /* GetWallpaper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWallpaper.swift; sourceTree = "<group>"; };
+		78FDB827268204F300A47F78 /* wallpaper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				789B987226803B3200446545 /* AppDelegate.swift */,
-				78FDB81D2681A22800A47F78 /* StatusMenuController.swift */,
 				78FDB8212681A6E400A47F78 /* MainMenu.xib */,
+				78FDB81D2681A22800A47F78 /* StatusMenuController.swift */,
 				78FDB8252681AC7500A47F78 /* GetWallpaper.swift */,
+				78FDB827268204F300A47F78 /* wallpaper.swift */,
 				789B987626803B3300446545 /* Assets.xcassets */,
 				789B987E26803B3300446545 /* Info.plist */,
 				789B987F26803B3300446545 /* Bing_Wallpaper_for_Mac.entitlements */,
@@ -270,6 +273,7 @@
 			files = (
 				78FDB81E2681A22800A47F78 /* StatusMenuController.swift in Sources */,
 				78FDB8262681AC7500A47F78 /* GetWallpaper.swift in Sources */,
+				78FDB828268204F300A47F78 /* wallpaper.swift in Sources */,
 				789B987326803B3200446545 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

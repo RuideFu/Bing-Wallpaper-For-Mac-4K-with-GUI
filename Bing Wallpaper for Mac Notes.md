@@ -2,12 +2,19 @@
 
 ## Bing Wallpaper API
 
-Get URL:
+### Get URL:
 `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&FORM=BEHPTB&uhd=1&uhdwidth=3840&uhdheight=2160
 `
 * idx: indexing date from today (0, yesterday 1)
 * n: number of image returns
-Return json:
+
+### Region:
+`https://www.bing.com/?setmkt=en-us&setlang=en-uk`
+
+
+[language Code](http://help.ads.microsoft.com/apex/index/18/en-US/10004#!)
+
+### Return json:
 
 ```json
 {
