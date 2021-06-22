@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Zpc-92-phw" id="PNK-Me-zmN"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Zpc-92-phw" customClass="Delegate"/>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="FD8-XB-b7y" customClass="StatusMenuController" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
+            <connections>
+                <outlet property="menu" destination="14u-9l-Von" id="Wmr-uG-qph"/>
+            </connections>
+        </customObject>
+        <menu id="14u-9l-Von">
+            <items>
+                <menuItem title="Update" id="aKc-7y-Eej">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="updateClicked:" target="FD8-XB-b7y" id="Ybl-am-s94"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit" id="GlZ-dX-6Ab">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitClicked:" target="FD8-XB-b7y" id="c0m-zy-naf"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="144" y="152"/>
+        </menu>
+    </objects>
+</document>
