@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -16,7 +17,8 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="FD8-XB-b7y" customClass="StatusMenuController" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
             <connections>
-                <outlet property="menu" destination="14u-9l-Von" id="Wmr-uG-qph"/>
+                <outlet property="statusMenu" destination="14u-9l-Von" id="Wmr-uG-qph"/>
+                <outlet property="wallpaperView" destination="uyC-Ks-w6Q" id="OjJ-Jp-AYT"/>
             </connections>
         </customObject>
         <menu id="14u-9l-Von">
@@ -27,6 +29,17 @@
                         <action selector="updateClicked:" target="FD8-XB-b7y" id="Ybl-am-s94"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="NKG-bO-Ryr"/>
+                <menuItem tag="1" id="SZH-aD-gGv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="1Wg-98-7JA"/>
+                <menuItem title="Preferences" id="Jft-hY-7Lb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="preferencesClicked:" target="FD8-XB-b7y" id="dw6-Ky-4Ax"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit" id="GlZ-dX-6Ab">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -34,7 +47,59 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="144" y="152"/>
+            <point key="canvasLocation" x="39" y="11"/>
         </menu>
+        <customView id="uyC-Ks-w6Q" customClass="WallpaperView" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="197" height="165"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nZx-pr-LXa">
+                    <rect key="frame" x="18" y="86" width="164" height="59"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" title="Title" id="WSK-rd-lap">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3p4-hG-3Q3">
+                    <rect key="frame" x="13" y="13" width="59" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="&lt;&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eSG-Vt-Wov">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="leftClicked:" target="FD8-XB-b7y" id="OBG-TZ-ie7"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-dU-k0Z">
+                    <rect key="frame" x="125" y="13" width="59" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="&gt;&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ilp-8E-5rJ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="rightClicked:" target="FD8-XB-b7y" id="qZQ-Ho-Mof"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="XWk-Ko-Gcv">
+                    <rect key="frame" x="70" y="13" width="59" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="More" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zKb-VC-YiV">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="moreClicked:" target="FD8-XB-b7y" id="nNc-y6-ALX"/>
+                    </connections>
+                </button>
+            </subviews>
+            <connections>
+                <outlet property="titleTextField" destination="nZx-pr-LXa" id="jTA-M9-UvN"/>
+            </connections>
+            <point key="canvasLocation" x="501.5" y="43.5"/>
+        </customView>
     </objects>
 </document>

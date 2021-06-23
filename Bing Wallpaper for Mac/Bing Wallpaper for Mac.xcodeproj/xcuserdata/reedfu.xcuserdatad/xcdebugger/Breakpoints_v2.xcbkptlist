@@ -14,9 +14,9 @@
             filePath = "Bing Wallpaper for Mac/StatusMenuController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "quitClicked(_:)"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "leftClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
