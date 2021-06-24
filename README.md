@@ -1,4 +1,5 @@
 # Bing-Wallpaper-For-Mac-4K-with-GUI
+![logo](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/master/icon.png)
 
 A desktop client of Bing Wallpaper for mac, written in swift.
 
