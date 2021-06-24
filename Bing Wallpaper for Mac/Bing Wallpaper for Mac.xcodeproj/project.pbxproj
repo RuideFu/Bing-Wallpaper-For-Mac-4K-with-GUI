@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7810B2F42682D04600128D43 /* WallpaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810B2F32682D04600128D43 /* WallpaperView.swift */; };
-		7810B2F72682D64F00128D43 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810B2F52682D64F00128D43 /* PreferencesWindow.swift */; };
-		7810B2F82682D64F00128D43 /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7810B2F62682D64F00128D43 /* PreferencesWindow.xib */; };
 		7810B2FA26830D2E00128D43 /* fileManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810B2F926830D2E00128D43 /* fileManagement.swift */; };
+		7845A4A42684B9BD00D165A5 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7845A4A22684B9BD00D165A5 /* PreferencesWindow.swift */; };
+		7845A4A52684B9BD00D165A5 /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7845A4A32684B9BD00D165A5 /* PreferencesWindow.xib */; };
 		789B987326803B3200446545 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789B987226803B3200446545 /* AppDelegate.swift */; };
 		789B987726803B3300446545 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 789B987626803B3300446545 /* Assets.xcassets */; };
 		789B987A26803B3300446545 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 789B987926803B3300446545 /* Preview Assets.xcassets */; };
@@ -41,9 +41,9 @@
 
 /* Begin PBXFileReference section */
 		7810B2F32682D04600128D43 /* WallpaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperView.swift; sourceTree = "<group>"; };
-		7810B2F52682D64F00128D43 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
-		7810B2F62682D64F00128D43 /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		7810B2F926830D2E00128D43 /* fileManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManagement.swift; sourceTree = "<group>"; };
+		7845A4A22684B9BD00D165A5 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		7845A4A32684B9BD00D165A5 /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		789B986F26803B3200446545 /* Bing Wallpaper for Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bing Wallpaper for Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		789B987226803B3200446545 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		789B987626803B3300446545 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,9 +113,9 @@
 				789B987226803B3200446545 /* AppDelegate.swift */,
 				78FDB8212681A6E400A47F78 /* MainMenu.xib */,
 				78FDB81D2681A22800A47F78 /* StatusMenuController.swift */,
+				7845A4A22684B9BD00D165A5 /* PreferencesWindow.swift */,
+				7845A4A32684B9BD00D165A5 /* PreferencesWindow.xib */,
 				7810B2F32682D04600128D43 /* WallpaperView.swift */,
-				7810B2F52682D64F00128D43 /* PreferencesWindow.swift */,
-				7810B2F62682D64F00128D43 /* PreferencesWindow.xib */,
 				78FDB8252681AC7500A47F78 /* GetWallpaper.swift */,
 				7810B2F926830D2E00128D43 /* fileManagement.swift */,
 				78FDB827268204F300A47F78 /* wallpaper.swift */,
@@ -256,7 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7810B2F82682D64F00128D43 /* PreferencesWindow.xib in Resources */,
+				7845A4A52684B9BD00D165A5 /* PreferencesWindow.xib in Resources */,
 				789B987A26803B3300446545 /* Preview Assets.xcassets in Resources */,
 				789B987726803B3300446545 /* Assets.xcassets in Resources */,
 				78FDB8222681A6E400A47F78 /* MainMenu.xib in Resources */,
@@ -289,7 +289,7 @@
 				7810B2F42682D04600128D43 /* WallpaperView.swift in Sources */,
 				7810B2FA26830D2E00128D43 /* fileManagement.swift in Sources */,
 				78FDB828268204F300A47F78 /* wallpaper.swift in Sources */,
-				7810B2F72682D64F00128D43 /* PreferencesWindow.swift in Sources */,
+				7845A4A42684B9BD00D165A5 /* PreferencesWindow.swift in Sources */,
 				789B987326803B3200446545 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +460,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "rdfu.Bing-Wallpaper-for-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -485,6 +486,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "rdfu.Bing-Wallpaper-for-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -23,7 +23,6 @@ class WallpaperApi {
         
         let task = session.dataTask(with: request, completionHandler: { (data, response, err) in
             let image = self.wallpaperFromJSON(data: data!)
-            NSLog(image.description)
             success(image)
         })
         task.resume()

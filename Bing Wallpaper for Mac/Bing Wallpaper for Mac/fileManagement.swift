@@ -44,18 +44,17 @@ class fileManage {
                         existing.append((self.cache?.appendingPathComponent(item))!)
                     }
                 }
-                for i in 0...maxIndex {
+                for i in 0...maxIndex-1 {
                     if i != 0 {
                         date.addTimeInterval(TimeInterval(-24*60*60))
                     }
                     let str = self.dateToStr(date: date)
-                    print("TIME \(str)")
                     images.append((self.cache?.appendingPathComponent("bing\(str).jpeg"))!)
                 }
                 let toBeRm = self.outOfScope(arr1: existing, arr2: images)
                 for item in toBeRm{
                     do {
-                        print("This is it \(item)")
+                        print("Remove image \(item)")
                         try manager.removeItem(at: item)
                     } catch {
                         print(error)

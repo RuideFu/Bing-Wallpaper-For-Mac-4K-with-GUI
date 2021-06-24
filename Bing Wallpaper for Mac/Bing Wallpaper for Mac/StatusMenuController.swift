@@ -7,11 +7,14 @@
 
 import Cocoa
 
-class StatusMenuController: NSObject {
+class StatusMenuController: NSObject, PreferencesWindowDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
     
     @IBOutlet weak var wallpaperView: WallpaperView!
     
+    @IBOutlet weak var rightButton: NSButton!
+    
+    @IBOutlet weak var leftButton: NSButton!
     var wallpaperMenuItem: NSMenuItem!
          var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength);
     
@@ -19,8 +22,11 @@ class StatusMenuController: NSObject {
     
     var file = fileManage();
     
+    var preferencesWindow: PreferencesWindow!
+    
     let minIndex = 0
-    let maxIndex = 5
+    var maxIndex = 5
+    var DEFAULT_MAX = "5"
     var currIndex = 0
     
     let lang = "en"
@@ -32,14 +38,19 @@ class StatusMenuController: NSObject {
         statusItem.menu = statusMenu
         wallpaperMenuItem = statusMenu.item(withTag: 1)
         wallpaperMenuItem.view = wallpaperView
+        preferencesWindow = PreferencesWindow()
+        preferencesWindow.delegate = self
+        let defaults = UserDefaults.standard
+        let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
+        maxIndex = Int(maxIndexStr)!
+        
     }
 
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
-        reload(index: minIndex, language: lang)
-        currIndex = 0
-        file.cleanImages(maxIndex: maxIndex, language: lang)
+        update()
     }
+    
     @IBAction func moreClicked(_ sender: NSButton) {
         wallpaperAPI.fetchMeta(index: currIndex, language: lang) { wallpaper in
             if NSWorkspace.shared.open(wallpaper.quizURL){
@@ -53,6 +64,7 @@ class StatusMenuController: NSObject {
             currIndex += 1
             reload(index: currIndex, language: lang)
         }
+        self.buttonCtrl()
     }
     
     
@@ -61,10 +73,11 @@ class StatusMenuController: NSObject {
             currIndex -= 1
             reload(index: currIndex, language: lang)
         }
+        self.buttonCtrl()
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
-        
+        preferencesWindow.showWindow(nil)
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {
@@ -81,5 +94,33 @@ class StatusMenuController: NSObject {
             let screen = NSScreen.main
             file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
         }
+    }
+    
+    func buttonCtrl(){
+        if currIndex == 0{
+            rightButton.isEnabled = false
+        } else if currIndex == maxIndex-1 {
+            leftButton.isEnabled = false
+        } else {
+            rightButton.isEnabled = true
+            leftButton.isEnabled = true
+        }
+    }
+    
+    func update(){
+        reload(index: minIndex, language: lang)
+        currIndex = 0
+        let defaults = UserDefaults.standard
+        let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
+        maxIndex = Int(maxIndexStr)!
+        print(maxIndex)
+        print(type(of: maxIndex))
+        file.cleanImages(maxIndex: maxIndex, language: lang)
+        self.buttonCtrl()
+        print(leftButton.isEnabled)
+    }
+    
+    func preferencesDidUpdate() {
+        update()
     }
 }

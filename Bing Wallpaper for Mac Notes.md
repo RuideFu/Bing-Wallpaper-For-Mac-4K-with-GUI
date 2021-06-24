@@ -56,3 +56,20 @@
 * 18x18
 * 36x36
 * 54x54
+
+
+## Bug Memo
+
+1. left/right button turns grey after change number of wallpapers
+  Regeneration Experiment:
+  * Update (init at 3)
+  * Change to 5
+  * Change to 10
+  * Change to 5
+  * Change to 3
+  * Change to 10
+  * Change to 3
+  * Update with preference window open
+    * Change to 5
+
+  Bug not found. Wierd
