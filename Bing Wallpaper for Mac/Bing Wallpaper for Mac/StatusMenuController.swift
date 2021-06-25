@@ -77,6 +77,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
+//        preferencesWindow.loadWindow()
         preferencesWindow.showWindow(nil)
     }
     

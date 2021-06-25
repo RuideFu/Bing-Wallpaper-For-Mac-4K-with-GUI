@@ -23,7 +23,29 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         return "PreferencesWindow"
     }
     
-    func windowWillClose(_ notification: Notification) {
+    @IBAction func okClicked(_ sender: NSButton) {
+        self.changeNumber()
+        self.close()
+    }
+    
+    
+    @IBAction func cancelClicked(_ sender: NSButton) {
+        self.maintainNumber()
+        self.close()
+    }
+    
+    
+//    func windowWillClose(_ notification: Notification) {
+//    }
+    
+    func maintainNumber(){
+        let defaults = UserDefaults.standard
+        let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
+        print("load default \(DEFAULT_MAX)")
+        numberOfWallpapers.stringValue = maxIndexStr
+    }
+    
+    func changeNumber(){
         let defaults = UserDefaults.standard
         defaults.setValue(numberOfWallpapers.stringValue, forKey: "max")
         delegate?.preferencesDidUpdate()
@@ -34,6 +56,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
+        print("load default \(DEFAULT_MAX)")
         numberOfWallpapers.stringValue = maxIndexStr
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
