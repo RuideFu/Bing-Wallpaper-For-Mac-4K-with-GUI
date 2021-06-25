@@ -43,6 +43,12 @@
                         <action selector="preferencesClicked:" target="FD8-XB-b7y" id="dw6-Ky-4Ax"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Github" id="6h9-qb-sQI">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="githubClicked:" target="FD8-XB-b7y" id="whg-KQ-4Ww"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit" id="GlZ-dX-6Ab">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

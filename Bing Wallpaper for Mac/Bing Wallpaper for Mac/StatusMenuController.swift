@@ -15,8 +15,10 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     @IBOutlet weak var rightButton: NSButton!
     
     @IBOutlet weak var leftButton: NSButton!
+    
     var wallpaperMenuItem: NSMenuItem!
-         var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength);
+    
+    var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength);
     
     var wallpaperAPI = WallpaperApi()
     
@@ -95,6 +97,10 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
             let screen = NSScreen.main
             file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
         }
+    }
+    
+    @IBAction func githubClicked(_ sender: NSMenuItem) {
+        NSWorkspace.shared.open(URL(string: "https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI")!)
     }
     
     func buttonCtrl(){
