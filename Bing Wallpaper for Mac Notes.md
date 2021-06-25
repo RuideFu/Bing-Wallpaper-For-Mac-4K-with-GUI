@@ -61,15 +61,23 @@
 ## Bug Memo
 
 1. left/right button turns grey after change number of wallpapers
-  Regeneration Experiment:
-  * Update (init at 3)
-  * Change to 5
-  * Change to 10
-  * Change to 5
-  * Change to 3
-  * Change to 10
-  * Change to 3
-  * Update with preference window open
-    * Change to 5
+  Reproduce:
+  * switch to the wallpaper with maximum index
+  * change maximum number of wallpapers in setting
+  * update
+Solved: error in counting index and button.isenabled executions in buttonCtrl function
 
-  Bug not found. Wierd
+
+
+
+
+
+
+
+
+
+
+
+
+
+

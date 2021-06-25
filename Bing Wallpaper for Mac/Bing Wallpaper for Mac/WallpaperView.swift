@@ -21,4 +21,10 @@ class WallpaperView: NSView {
             self.titleTextField.stringValue = meta.title
         }
     }
+    
+    func error(){
+        DispatchQueue.main.async {
+            self.titleTextField.stringValue = "Update failed. Check internet connection"
+        }
+    }
 }

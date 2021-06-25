@@ -17,7 +17,7 @@ struct Wallpaper: Decodable {
     let title: String;
     let copyright: String;
     let quiz: String;
-    let err: Bool?;
+    var err: Bool?;
     var wallpaperURL: URL {
         return bingURL(halfurl: url)
     }

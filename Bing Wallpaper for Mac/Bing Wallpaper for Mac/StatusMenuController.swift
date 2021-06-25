@@ -16,6 +16,8 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     
     @IBOutlet weak var leftButton: NSButton!
     
+    @IBOutlet weak var moreButton: NSButton!
+    
     var wallpaperMenuItem: NSMenuItem!
     
     var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength);
@@ -45,7 +47,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
-        
+        self.buttonCtrl()
     }
 
     
@@ -62,20 +64,18 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     }
     
     @IBAction func leftClicked(_ sender: NSButton) {
-        if currIndex < maxIndex{
+        if currIndex < maxIndex - 1{
             currIndex += 1
-            reload(index: currIndex, language: lang)
+            reload(index: currIndex, language: lang, left: true)
         }
-        self.buttonCtrl()
     }
     
     
     @IBAction func rightClicked(_ sender: NSButton) {
         if currIndex > minIndex{
             currIndex -= 1
-            reload(index: currIndex, language: lang)
+            reload(index: currIndex, language: lang, left: false)
         }
-        self.buttonCtrl()
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
@@ -83,48 +83,70 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         preferencesWindow.showWindow(nil)
     }
     
-    @IBAction func quitClicked(_ sender: NSMenuItem) {
-        NSApplication.shared.terminate(self)
-    }
-    
-    
-    func reload(index: Int, language: String){
-        wallpaperAPI.fetchMeta(index: index, language: language){ [self]wallpaper in
-            //update information in popup
-            self.wallpaperView.update(meta: wallpaper)
-            //change wallpaper on desktop
-            let workspace = NSWorkspace.shared
-            let screen = NSScreen.main
-            file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
-        }
-    }
+
     
     @IBAction func githubClicked(_ sender: NSMenuItem) {
         NSWorkspace.shared.open(URL(string: "https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI")!)
     }
     
+    @IBAction func quitClicked(_ sender: NSMenuItem) {
+        NSApplication.shared.terminate(self)
+    }
+    
+    func reload(index: Int, language: String, left: Bool?){
+        self.buttonDeactivate()
+        wallpaperAPI.fetchMeta(index: index, language: language){ [self]wallpaper in
+            if wallpaper.err != nil {
+                self.wallpaperView.error()
+                DispatchQueue.main.async {
+                    if left == true {
+                        currIndex -= 1
+                    } else if left == false {
+                        currIndex += 1
+                    }
+                    self.buttonCtrl()
+                }
+            } else {
+                //change wallpaper on desktop
+                let workspace = NSWorkspace.shared
+                let screen = NSScreen.main
+                file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
+                //update information in popup
+                self.wallpaperView.update(meta: wallpaper)
+                DispatchQueue.main.async {
+                    self.buttonCtrl()
+                }
+            }
+        }
+    }
+    
     func buttonCtrl(){
         if currIndex == 0{
             rightButton.isEnabled = false
+            leftButton.isEnabled = true
         } else if currIndex == maxIndex-1 {
             leftButton.isEnabled = false
+            rightButton.isEnabled = true
         } else {
             rightButton.isEnabled = true
             leftButton.isEnabled = true
         }
+        moreButton.isEnabled = true
+    }
+    
+    func buttonDeactivate(){
+        rightButton.isEnabled = false
+        leftButton.isEnabled = false
+        moreButton.isEnabled = false
     }
     
     func update(){
-        reload(index: minIndex, language: lang)
         currIndex = 0
+        reload(index: currIndex, language: lang, left: nil)
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
-        print(maxIndex)
-        print(type(of: maxIndex))
         file.cleanImages(maxIndex: maxIndex, language: lang)
-        self.buttonCtrl()
-        print(leftButton.isEnabled)
     }
     
     func preferencesDidUpdate() {

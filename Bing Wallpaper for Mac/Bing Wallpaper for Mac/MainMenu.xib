@@ -18,6 +18,7 @@
         <customObject id="FD8-XB-b7y" customClass="StatusMenuController" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
             <connections>
                 <outlet property="leftButton" destination="3p4-hG-3Q3" id="XEk-8s-drV"/>
+                <outlet property="moreButton" destination="XWk-Ko-Gcv" id="XI8-WO-AOQ"/>
                 <outlet property="rButton" destination="XpX-dU-k0Z" id="ije-fQ-9aq"/>
                 <outlet property="rightButton" destination="XpX-dU-k0Z" id="4h5-rH-wb9"/>
                 <outlet property="statusMenu" destination="14u-9l-Von" id="Wmr-uG-qph"/>
@@ -96,7 +97,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nZx-pr-LXa">
-                    <rect key="frame" x="18" y="47" width="164" height="45"/>
+                    <rect key="frame" x="18" y="45" width="164" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" selectable="YES" title="Click Update to Load Image Information" id="WSK-rd-lap">
                         <font key="font" metaFont="system"/>
@@ -108,7 +109,7 @@
             <connections>
                 <outlet property="titleTextField" destination="nZx-pr-LXa" id="jTA-M9-UvN"/>
             </connections>
-            <point key="canvasLocation" x="41" y="115"/>
+            <point key="canvasLocation" x="39" y="248"/>
         </customView>
     </objects>
 </document>

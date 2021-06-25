@@ -16,25 +16,40 @@ class WallpaperApi {
 
     
     func fetchMeta(index: Int, language: String, success: @escaping (Wallpaper) -> Void){
+        NSLog("Start fetching (index \(index))")
         let metaURL = "\(metaURLpt1)\(index)\(metaURLpt2)\(language)\(metaURLpt3)"
         let myurl = URL(string: metaURL)!
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 3.0
         let request = URLRequest(url: myurl)
-        let session = URLSession.shared
-        
+        let session = URLSession(configuration: config)
+        NSLog("Session time \(config.timeoutIntervalForRequest)")
         let task = session.dataTask(with: request, completionHandler: { (data, response, err) in
-            let image = self.wallpaperFromJSON(data: data!)
-            success(image)
+            let httpResponse = response as? HTTPURLResponse
+            if httpResponse?.statusCode == 200 {
+                let image = self.wallpaperFromJSON(data: data!)
+                success(image)
+            } else {
+                success(Wallpaper.init())
+                NSLog("fetch meta (index \(index)) failed")
+            }
+            
         })
         task.resume()
     }
     
     func fetchImage(url: URL, path: String, completionHandler: @escaping () -> Void){
         let task = URLSession.shared.downloadTask(with: url) {localURL, urlResponse, error in
-            do {
-                try FileManager.default.moveItem(atPath: localURL!.path, toPath: path)
-                completionHandler()
-            } catch {
-                print(error)
+            let httpResponse = urlResponse as? HTTPURLResponse
+            if httpResponse?.statusCode == 200 {
+                do {
+                    try FileManager.default.moveItem(atPath: localURL!.path, toPath: path)
+                    completionHandler()
+                } catch {
+                    print(error)
+                }
+            } else {
+                NSLog("fetch image failed")
             }
         }
         task.resume()
