@@ -110,6 +110,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                 //change wallpaper on desktop
                 let workspace = NSWorkspace.shared
                 let screen = NSScreen.main
+//                file.storMeta(meta: wallpaper)
                 file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
                 //update information in popup
                 self.wallpaperView.update(meta: wallpaper)

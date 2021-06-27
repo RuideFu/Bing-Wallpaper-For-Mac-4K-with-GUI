@@ -62,36 +62,38 @@ class cacheManager {
     func cleanCache(maxIndex: Int, language: String){
         wallpaperAPI.fetchMeta(index: 0, language: language) { meta in
             let manager = FileManager.default
-            var date = meta.startdate
-            var images: [URL] = []
-            var existing: [URL] = []
-            do {
-                let files = try manager.contentsOfDirectory(atPath: self.cache!.path)
-                for item in files  {
-                    if item.hasPrefix("bing") && item.hasSuffix(".jpeg"){
-                        existing.append((self.cache?.appendingPathComponent(item))!)
+            let fileTypes = [".jpeg", ".json"]
+            for fileType in fileTypes {
+                var date = meta.startdate
+                var allowed: [URL] = []
+                var existing: [URL] = []
+                do {
+                    let files = try manager.contentsOfDirectory(atPath: self.cache!.path)
+                    for item in files  {
+                        if item.hasPrefix("bing") && item.hasSuffix(fileType){
+                            existing.append((self.cache?.appendingPathComponent(item))!)
+                        }
                     }
-                }
-                for i in 0...maxIndex-1 {
-                    if i != 0 {
-                        date.addTimeInterval(TimeInterval(-24*60*60))
+                    for i in 0...maxIndex-1 {
+                        if i != 0 {
+                            date.addTimeInterval(TimeInterval(-24*60*60))
+                        }
+                        let str = self.dateToStr(date: date)
+                        allowed.append((self.cache?.appendingPathComponent("bing\(str)\(fileType)"))!)
                     }
-                    let str = self.dateToStr(date: date)
-                    images.append((self.cache?.appendingPathComponent("bing\(str).jpeg"))!)
-                }
-                let toBeRm = self.outOfScope(arr1: existing, arr2: images)
-                for item in toBeRm{
-                    do {
-                        try manager.removeItem(at: item)
-                        NSLog("Remove image \(item)")
-                    } catch {
-                        NSLog("Remove image Failed \(item)")
+                    let toBeRm = self.outOfScope(arr1: existing, arr2: allowed)
+                    for item in toBeRm{
+                        do {
+                            try manager.removeItem(at: item)
+                            NSLog("Remove file \(item)")
+                        } catch {
+                            NSLog("Remove file Failed \(item)")
+                        }
                     }
+                } catch {
+                    NSLog("Remove File (\(fileType)) Failed Completely")
                 }
-            } catch {
-                NSLog("Remove Images Failed Completely")
             }
-            
         }
     }
     
