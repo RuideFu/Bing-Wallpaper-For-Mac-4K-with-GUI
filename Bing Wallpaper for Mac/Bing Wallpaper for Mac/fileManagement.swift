@@ -8,26 +8,36 @@
 import Foundation
 import Cocoa
 
-class fileManage {
+class cacheManager {
     var wallpaperAPI = WallpaperApi()
     let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
     
     func setImage(meta: Wallpaper, workspace: NSWorkspace, screen: NSScreen){
+        self.storImage(meta: meta){ file in
+            do {
+                try workspace.setDesktopImageURL(file, for: screen, options: [:])
+            } catch {
+                NSLog("Setting Wallpaper Failed")
+            }
+        }
+    }
+    
+    func storImage(meta: Wallpaper, callback: @escaping (_ filePath: URL)-> Void){
         let date = dateToStr(date: meta.startdate)
         let file = cache?.appendingPathComponent("bing\(date).jpeg")
-        
-        do {
-            _ = FileManager.default.contents(atPath: file!.path)
-            try workspace.setDesktopImageURL(file!, for: screen, options: [:])
-            print(file!.path)
-        } catch {
-            wallpaperAPI.fetchImage(url: meta.wallpaperURL, path: file!.path, completionHandler: {
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: file!.path) {
+            wallpaperAPI.fetchImage(url: meta.wallpaperURL) { tempURL in
                 do {
-                    try workspace.setDesktopImageURL(file!, for: screen, options: [:])
+                    try FileManager.default.moveItem(atPath: tempURL.path, toPath: file!.path)
+                    callback(file!)
                 } catch {
-                    print(error)
+                    NSLog("Wallpaper \(date) Save Failed")
                 }
-            })
+            }
+        } else {
+            NSLog("File Exists \(String(describing: file?.path))")
+            callback(file!)
         }
     }
     

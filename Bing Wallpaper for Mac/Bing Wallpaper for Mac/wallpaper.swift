@@ -7,11 +7,13 @@
 
 import Foundation
 
+let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+
 struct Bingfeedback: Decodable {
     let images: [Wallpaper];
 }
 
-struct Wallpaper: Decodable {
+struct Wallpaper: Decodable, Encodable {
     let startdate: Date;
     let url: String;
     let title: String;
@@ -27,6 +29,11 @@ struct Wallpaper: Decodable {
     var description: String {
         return "\(startdate)\n\(title)\n\(wallpaperURL)"
     }
+    var wallpaperPath: URL {
+        let date = cacheManager().dateToStr(date: startdate)
+        return (cache?.appendingPathComponent("bing\(date).jpeg"))!
+    }
+    
     init() {
         err = true;
         startdate = Date();
@@ -36,6 +43,9 @@ struct Wallpaper: Decodable {
         quiz = ""
     }
 }
+
+
+
 
 func bingURL(halfurl: String)->URL{
     return URL(string: "https://www.bing.com\(halfurl)")!

@@ -38,22 +38,16 @@ class WallpaperApi {
         task.resume()
     }
     
-    func fetchImage(url: URL, path: String, completionHandler: @escaping () -> Void){
+    func fetchImage(url: URL, completionHandler: @escaping (_ tempURL: URL) -> Void){
         let task = URLSession.shared.downloadTask(with: url) {localURL, urlResponse, error in
             let httpResponse = urlResponse as? HTTPURLResponse
             if httpResponse?.statusCode == 200 {
-                do {
-                    try FileManager.default.moveItem(atPath: localURL!.path, toPath: path)
-                    completionHandler()
-                } catch {
-                    print(error)
-                }
+                completionHandler(localURL!)
             } else {
                 NSLog("fetch image failed")
             }
         }
         task.resume()
-            
     }
     
     

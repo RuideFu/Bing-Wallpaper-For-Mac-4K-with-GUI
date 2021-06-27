@@ -24,7 +24,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     
     var wallpaperAPI = WallpaperApi()
     
-    var file = fileManage();
+    var file = cacheManager();
     
     var preferencesWindow: PreferencesWindow!
     
