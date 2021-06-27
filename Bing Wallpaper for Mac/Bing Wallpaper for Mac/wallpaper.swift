@@ -29,11 +29,14 @@ struct Wallpaper: Decodable, Encodable {
     var description: String {
         return "\(startdate)\n\(title)\n\(wallpaperURL)"
     }
-    var wallpaperPath: URL {
+    var imageFileUrl: URL {
         let date = cacheManager().dateToStr(date: startdate)
         return (cache?.appendingPathComponent("bing\(date).jpeg"))!
     }
-    
+    var metaFileUrl : URL {
+        let date = cacheManager().dateToStr(date: startdate)
+        return (cache?.appendingPathComponent("bing\(date).json"))!
+    }
     init() {
         err = true;
         startdate = Date();

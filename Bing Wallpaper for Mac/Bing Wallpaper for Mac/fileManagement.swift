@@ -23,25 +23,43 @@ class cacheManager {
     }
     
     func storImage(meta: Wallpaper, callback: @escaping (_ filePath: URL)-> Void){
-        let date = dateToStr(date: meta.startdate)
-        let file = cache?.appendingPathComponent("bing\(date).jpeg")
+        let file = meta.imageFileUrl
         let fileManager = FileManager.default
-        if !fileManager.fileExists(atPath: file!.path) {
+        if !fileManager.fileExists(atPath: file.path) {
             wallpaperAPI.fetchImage(url: meta.wallpaperURL) { tempURL in
                 do {
-                    try FileManager.default.moveItem(atPath: tempURL.path, toPath: file!.path)
-                    callback(file!)
+                    try FileManager.default.moveItem(atPath: tempURL.path, toPath: file.path)
+                    callback(file)
                 } catch {
-                    NSLog("Wallpaper \(date) Save Failed")
+                    NSLog("Wallpaper \(self.dateToStr(date: meta.startdate)) Save Failed")
                 }
             }
         } else {
-            NSLog("File Exists \(String(describing: file?.path))")
-            callback(file!)
+            NSLog("Image Exists \(String(describing: file.path))")
+            callback(file)
         }
     }
     
-    func cleanImages(maxIndex: Int, language: String){
+    func storMeta(meta: Wallpaper) {
+        if meta.err == nil {
+            let encoder = JSONEncoder()
+            do {
+                let jsonData = try encoder.encode(meta)
+//                print(String(data: jsonData, encoding: .utf8)!)
+                let fileManager = FileManager.default
+                if !fileManager.fileExists(atPath: meta.metaFileUrl.path) {
+                    fileManager.createFile(atPath: meta.metaFileUrl.path, contents: jsonData, attributes: nil)
+                } else {
+                    NSLog("Meta Exists \(String(describing: meta.metaFileUrl.path))")
+                }
+                
+            } catch {
+                NSLog("Encode Failed \(meta.startdate)")
+            }
+        }
+    }
+    
+    func cleanCache(maxIndex: Int, language: String){
         wallpaperAPI.fetchMeta(index: 0, language: language) { meta in
             let manager = FileManager.default
             var date = meta.startdate
@@ -64,14 +82,14 @@ class cacheManager {
                 let toBeRm = self.outOfScope(arr1: existing, arr2: images)
                 for item in toBeRm{
                     do {
-                        print("Remove image \(item)")
                         try manager.removeItem(at: item)
+                        NSLog("Remove image \(item)")
                     } catch {
-                        print(error)
+                        NSLog("Remove image Failed \(item)")
                     }
                 }
             } catch {
-                print(error)
+                NSLog("Remove Images Failed Completely")
             }
             
         }

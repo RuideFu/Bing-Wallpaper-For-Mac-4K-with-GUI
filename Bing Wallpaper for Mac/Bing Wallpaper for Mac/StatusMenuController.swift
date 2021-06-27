@@ -146,7 +146,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
-        file.cleanImages(maxIndex: maxIndex, language: lang)
+        file.cleanCache(maxIndex: maxIndex, language: lang)
     }
     
     func preferencesDidUpdate() {

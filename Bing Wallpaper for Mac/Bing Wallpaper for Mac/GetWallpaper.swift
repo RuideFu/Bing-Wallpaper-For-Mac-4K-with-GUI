@@ -15,22 +15,20 @@ class WallpaperApi {
     
 
     
-    func fetchMeta(index: Int, language: String, success: @escaping (Wallpaper) -> Void){
-        NSLog("Start fetching (index \(index))")
+    func fetchMeta(index: Int, language: String, completeHandeler: @escaping (Wallpaper) -> Void){
         let metaURL = "\(metaURLpt1)\(index)\(metaURLpt2)\(language)\(metaURLpt3)"
         let myurl = URL(string: metaURL)!
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 3.0
         let request = URLRequest(url: myurl)
         let session = URLSession(configuration: config)
-        NSLog("Session time \(config.timeoutIntervalForRequest)")
         let task = session.dataTask(with: request, completionHandler: { (data, response, err) in
             let httpResponse = response as? HTTPURLResponse
             if httpResponse?.statusCode == 200 {
                 let image = self.wallpaperFromJSON(data: data!)
-                success(image)
+                completeHandeler(image)
             } else {
-                success(Wallpaper.init())
+                completeHandeler(Wallpaper.init())
                 NSLog("fetch meta (index \(index)) failed")
             }
             
