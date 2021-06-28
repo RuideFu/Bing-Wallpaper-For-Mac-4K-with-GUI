@@ -50,7 +50,6 @@ class WallpaperApi {
     
     
     func wallpaperFromJSON(data: Data)->Wallpaper{
-        
         do {
             //customize decoder
             let decoder = JSONDecoder();
@@ -61,8 +60,14 @@ class WallpaperApi {
             let result = try decoder.decode(Bingfeedback.self, from: data)
             return result.images[0]
         } catch {
-            NSLog("JSON Parsing fialed: \(error)")
-            return Wallpaper()
+            do {
+                let decoder = JSONDecoder();
+                let result = try decoder.decode(Wallpaper.self, from: data)
+                return result
+            } catch {
+                NSLog("JSON Parsing failed: \(error)")
+                return Wallpaper()
+            }
         }
 
     }

@@ -10,7 +10,8 @@ import Cocoa
 
 class cacheManager {
     var wallpaperAPI = WallpaperApi()
-    let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+    let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    let fileManager = FileManager.default
     
     func setImage(meta: Wallpaper, workspace: NSWorkspace, screen: NSScreen){
         self.storImage(meta: meta){ file in
@@ -24,7 +25,6 @@ class cacheManager {
     
     func storImage(meta: Wallpaper, callback: @escaping (_ filePath: URL)-> Void){
         let file = meta.imageFileUrl
-        let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: file.path) {
             wallpaperAPI.fetchImage(url: meta.wallpaperURL) { tempURL in
                 do {
@@ -45,8 +45,6 @@ class cacheManager {
             let encoder = JSONEncoder()
             do {
                 let jsonData = try encoder.encode(meta)
-//                print(String(data: jsonData, encoding: .utf8)!)
-                let fileManager = FileManager.default
                 if !fileManager.fileExists(atPath: meta.metaFileUrl.path) {
                     fileManager.createFile(atPath: meta.metaFileUrl.path, contents: jsonData, attributes: nil)
                 } else {
@@ -59,6 +57,24 @@ class cacheManager {
         }
     }
     
+    func readMeta(date: Date) -> Wallpaper {
+        let file = self.pathFromDate(date: date, type: ".json")
+        if fileManager.fileExists(atPath: file.path) {
+            do {
+                let jsonStr = try String(contentsOf: file, encoding: .utf8)
+                let jsonData = Data(jsonStr.utf8)
+                return wallpaperAPI.wallpaperFromJSON(data: jsonData)
+            } catch {
+                NSLog("Json Reading Failed \(self.dateToStr(date: date))")
+            }
+            
+            return Wallpaper.init()
+        } else {
+            NSLog("Json File Doesn' Exist \(self.dateToStr(date: date))")
+            return Wallpaper.init()
+        }
+    }
+    
     func cleanCache(maxIndex: Int, language: String){
         wallpaperAPI.fetchMeta(index: 0, language: language) { meta in
             let manager = FileManager.default
@@ -68,18 +84,17 @@ class cacheManager {
                 var allowed: [URL] = []
                 var existing: [URL] = []
                 do {
-                    let files = try manager.contentsOfDirectory(atPath: self.cache!.path)
+                    let files = try manager.contentsOfDirectory(atPath: self.cache.path)
                     for item in files  {
                         if item.hasPrefix("bing") && item.hasSuffix(fileType){
-                            existing.append((self.cache?.appendingPathComponent(item))!)
+                            existing.append((self.cache.appendingPathComponent(item)))
                         }
                     }
                     for i in 0...maxIndex-1 {
                         if i != 0 {
                             date.addTimeInterval(TimeInterval(-24*60*60))
                         }
-                        let str = self.dateToStr(date: date)
-                        allowed.append((self.cache?.appendingPathComponent("bing\(str)\(fileType)"))!)
+                        allowed.append(self.pathFromDate(date: date, type: fileType))
                     }
                     let toBeRm = self.outOfScope(arr1: existing, arr2: allowed)
                     for item in toBeRm{
@@ -101,6 +116,15 @@ class cacheManager {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         return dateFormatter.string(from: date)
+    }
+    
+    func pathFromDate(dateStr: String, type: String)->URL{
+        return cache.appendingPathComponent("bing\(dateStr)\(type)")
+    }
+    
+    func pathFromDate(date: Date, type: String)->URL{
+        let dateStr = self.dateToStr(date: date)
+        return pathFromDate(dateStr: dateStr, type: type)
     }
     
     func outOfScope(arr1:[URL], arr2: [URL])->[URL]{

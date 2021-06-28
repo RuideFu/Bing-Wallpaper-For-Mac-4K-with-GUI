@@ -117,6 +117,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                 DispatchQueue.main.async {
                     self.buttonCtrl()
                 }
+//                print("read local meta test \(file.readMeta(date: wallpaper.startdate).description)")
             }
         }
     }
