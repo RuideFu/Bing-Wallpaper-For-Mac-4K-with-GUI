@@ -13,10 +13,11 @@ class cacheManager {
     let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     let fileManager = FileManager.default
     
-    func setImage(meta: Wallpaper, workspace: NSWorkspace, screen: NSScreen){
+    func setImage(meta: Wallpaper, workspace: NSWorkspace, screen: NSScreen, completionHandeler: @escaping ()->Void){
         self.storImage(meta: meta){ file in
             do {
                 try workspace.setDesktopImageURL(file, for: screen, options: [:])
+                completionHandeler()
             } catch {
                 NSLog("Setting Wallpaper Failed")
             }

@@ -94,9 +94,40 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     }
     
     func reload(index: Int, language: String, left: Bool?){
+        // deactivate buttons
         self.buttonDeactivate()
-        wallpaperAPI.fetchMeta(index: index, language: language){ [self]wallpaper in
-            if wallpaper.err != nil {
+        //acquire metadata
+        //fetch meta
+        wallpaperAPI.fetchMeta(index: index, language: language){
+            [self]wallpaper in
+            //fetch meta complete handeler
+            var metaBool: Bool
+            var meta: Wallpaper
+            if wallpaper.err == nil {
+                //Store metadata to cache
+                file.storMeta(meta: wallpaper)
+                metaBool = true
+                meta = wallpaper
+            } else {
+                //fetch meta failed
+                //need to implement read meta from cache 
+                metaBool = false
+                meta = Wallpaper.init()
+            }
+            //metadata is acquired
+            if metaBool {
+                //update information in popup
+                self.wallpaperView.update(meta: meta)
+                //change wallpaper on desktop
+                let workspace = NSWorkspace.shared
+                let screen = NSScreen.main
+                file.setImage(meta: wallpaper, workspace: workspace, screen: screen!, completionHandeler: {
+                    DispatchQueue.main.async {
+                        self.buttonCtrl()
+                    }
+                })
+            //metadata is acquisition failed
+            } else {
                 self.wallpaperView.error()
                 DispatchQueue.main.async {
                     if left == true {
@@ -106,18 +137,6 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                     }
                     self.buttonCtrl()
                 }
-            } else {
-                //change wallpaper on desktop
-                let workspace = NSWorkspace.shared
-                let screen = NSScreen.main
-//                file.storMeta(meta: wallpaper)
-                file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
-                //update information in popup
-                self.wallpaperView.update(meta: wallpaper)
-                DispatchQueue.main.async {
-                    self.buttonCtrl()
-                }
-//                print("read local meta test \(file.readMeta(date: wallpaper.startdate).description)")
             }
         }
     }
