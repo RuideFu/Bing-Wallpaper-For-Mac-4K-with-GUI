@@ -19,6 +19,7 @@ class cacheManager {
                 try workspace.setDesktopImageURL(file, for: screen, options: [:])
                 completionHandeler()
             } catch {
+                completionHandeler()
                 NSLog("Setting Wallpaper Failed")
             }
         }
@@ -67,9 +68,8 @@ class cacheManager {
                 return wallpaperAPI.wallpaperFromJSON(data: jsonData)
             } catch {
                 NSLog("Json Reading Failed \(self.dateToStr(date: date))")
+                return Wallpaper.init()
             }
-            
-            return Wallpaper.init()
         } else {
             NSLog("Json File Doesn' Exist \(self.dateToStr(date: date))")
             return Wallpaper.init()

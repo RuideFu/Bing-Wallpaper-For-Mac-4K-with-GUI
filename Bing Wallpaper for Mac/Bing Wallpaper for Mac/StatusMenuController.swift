@@ -29,6 +29,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     var preferencesWindow: PreferencesWindow!
     
     let minIndex = 0
+    var today = Date.init()
     var maxIndex = 5
     var DEFAULT_MAX = "5"
     var currIndex = 0
@@ -106,13 +107,18 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
             if wallpaper.err == nil {
                 //Store metadata to cache
                 file.storMeta(meta: wallpaper)
+                //cache date at index 0
+                if currIndex == 0{
+                    today = wallpaper.startdate
+                }
                 metaBool = true
                 meta = wallpaper
             } else {
                 //fetch meta failed
-                //need to implement read meta from cache 
-                metaBool = false
-                meta = Wallpaper.init()
+                //read meta from cache
+                let lookupDate = today.addingTimeInterval(TimeInterval(-24*60*60*(currIndex)))
+                meta = file.readMeta(date: lookupDate)
+                metaBool = (meta.err == nil)
             }
             //metadata is acquired
             if metaBool {
@@ -121,12 +127,12 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                 //change wallpaper on desktop
                 let workspace = NSWorkspace.shared
                 let screen = NSScreen.main
-                file.setImage(meta: wallpaper, workspace: workspace, screen: screen!, completionHandeler: {
+                file.setImage(meta: meta, workspace: workspace, screen: screen!, completionHandeler: {
                     DispatchQueue.main.async {
                         self.buttonCtrl()
                     }
                 })
-            //metadata is acquisition failed
+            //metadata acquisition failed
             } else {
                 self.wallpaperView.error()
                 DispatchQueue.main.async {
