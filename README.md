@@ -1,7 +1,11 @@
 # Bing-Wallpaper-For-Mac-4K-with-GUI
 ![logo](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/main/media/icon.png)
 
-A desktop client (menubar app) of Bing Wallpaper for mac, written in swift.
+A desktop client (menubar app) of 
+[Bing Wallpaper](https://www.microsoft.com/en-us/bing/bing-wallpaper)
+by Microsoft for mac, written in swift. 
+
+I don't own any right to the wallpapers, they come from Microsoft.
 
 An alpha version of the app is released. Install 
 [here](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/releases/download/v1.0-alpha/Bing.Wallpaper.for.Mac.-alpha.dmg)
