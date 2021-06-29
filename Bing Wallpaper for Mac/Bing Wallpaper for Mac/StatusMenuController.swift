@@ -13,19 +13,17 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     @IBOutlet weak var wallpaperView: WallpaperView!
     
     @IBOutlet weak var rightButton: NSButton!
-    
     @IBOutlet weak var leftButton: NSButton!
-    
     @IBOutlet weak var moreButton: NSButton!
+    @IBOutlet weak var updateButton: NSButton!
+    @IBOutlet weak var resetButton: NSButton!
+    @IBOutlet weak var loadingIndicator: NSProgressIndicator!
+    @IBOutlet weak var titleField: NSTextField!
     
     var wallpaperMenuItem: NSMenuItem!
-    
     var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength);
-    
     var wallpaperAPI = WallpaperApi()
-    
     var file = cacheManager();
-    
     var preferencesWindow: PreferencesWindow!
     
     let minIndex = 0
@@ -62,6 +60,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         update(screen: NSScreen.main!)
     }
     
+
     @IBAction func removeClicked(_ sender: NSMenuItem) {
         let screen = NSScreen.main
         let defaultWallpaper = URL.init(fileURLWithPath: "/System/Library/Desktop Pictures/Big Sur.heic")
@@ -183,12 +182,20 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
             leftButton.isEnabled = true
         }
         moreButton.isEnabled = true
+        updateButton.isEnabled = true
+        resetButton.isEnabled = true
+        titleField.isHidden = false
+        loadingIndicator.stopAnimation(nil)
     }
     
     func buttonDeactivate(){
         rightButton.isEnabled = false
         leftButton.isEnabled = false
         moreButton.isEnabled = false
+        updateButton.isEnabled = false
+        resetButton.isEnabled = false
+        titleField.isHidden = true
+        loadingIndicator.startAnimation(nil)
     }
     
     func update(screen: NSScreen){

@@ -18,27 +18,19 @@
         <customObject id="FD8-XB-b7y" customClass="StatusMenuController" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
             <connections>
                 <outlet property="leftButton" destination="3p4-hG-3Q3" id="XEk-8s-drV"/>
+                <outlet property="loadingIndicator" destination="Y3n-Po-wdT" id="Bp9-Uy-cvR"/>
                 <outlet property="moreButton" destination="XWk-Ko-Gcv" id="XI8-WO-AOQ"/>
                 <outlet property="rButton" destination="XpX-dU-k0Z" id="ije-fQ-9aq"/>
+                <outlet property="resetButton" destination="N8h-0x-lnc" id="br3-Lz-Aov"/>
                 <outlet property="rightButton" destination="XpX-dU-k0Z" id="4h5-rH-wb9"/>
                 <outlet property="statusMenu" destination="14u-9l-Von" id="Wmr-uG-qph"/>
+                <outlet property="titleField" destination="nZx-pr-LXa" id="v1B-o9-9P0"/>
+                <outlet property="updateButton" destination="nkO-B3-091" id="JKu-fv-WLu"/>
                 <outlet property="wallpaperView" destination="uyC-Ks-w6Q" id="OjJ-Jp-AYT"/>
             </connections>
         </customObject>
         <menu id="14u-9l-Von">
             <items>
-                <menuItem title="Update" id="aKc-7y-Eej">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="updateClicked:" target="FD8-XB-b7y" id="Ybl-am-s94"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Remove" id="70F-Ff-VXI">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="removeClicked:" target="FD8-XB-b7y" id="CyA-bh-zq8"/>
-                    </connections>
-                </menuItem>
                 <menuItem isSeparatorItem="YES" id="NKG-bO-Ryr"/>
                 <menuItem tag="1" id="SZH-aD-gGv">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -66,11 +58,11 @@
             <point key="canvasLocation" x="39" y="11"/>
         </menu>
         <customView id="uyC-Ks-w6Q" customClass="WallpaperView" customModule="Bing_Wallpaper_for_Mac" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="197" height="110"/>
+            <rect key="frame" x="0.0" y="0.0" width="197" height="138"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3p4-hG-3Q3">
-                    <rect key="frame" x="13" y="3" width="59" height="32"/>
+                    <rect key="frame" x="13" y="97" width="59" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="&lt;&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eSG-Vt-Wov">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -81,7 +73,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-dU-k0Z">
-                    <rect key="frame" x="125" y="3" width="59" height="32"/>
+                    <rect key="frame" x="125" y="97" width="59" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="&gt;&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ilp-8E-5rJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -92,7 +84,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="XWk-Ko-Gcv">
-                    <rect key="frame" x="69" y="3" width="59" height="32"/>
+                    <rect key="frame" x="69" y="97" width="59" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="More" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zKb-VC-YiV">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -102,20 +94,46 @@
                         <action selector="moreClicked:" target="FD8-XB-b7y" id="nNc-y6-ALX"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nkO-B3-091">
+                    <rect key="frame" x="13" y="3" width="80" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Update" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ibI-VB-o3b">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="updateClicked:" target="FD8-XB-b7y" id="WTW-PI-dxD"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N8h-0x-lnc">
+                    <rect key="frame" x="104" y="3" width="80" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Joj-ne-FPp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="removeClicked:" target="FD8-XB-b7y" id="Ez7-Wr-q6X"/>
+                    </connections>
+                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nZx-pr-LXa">
-                    <rect key="frame" x="18" y="38" width="164" height="52"/>
+                    <rect key="frame" x="18" y="35" width="161" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" selectable="YES" title="Click Update to Load Image Information" id="WSK-rd-lap">
-                        <font key="font" metaFont="system"/>
+                        <font key="font" size="14" name="Futura-Medium"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <progressIndicator fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Y3n-Po-wdT">
+                    <rect key="frame" x="82" y="53" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
             <connections>
                 <outlet property="titleTextField" destination="nZx-pr-LXa" id="jTA-M9-UvN"/>
             </connections>
-            <point key="canvasLocation" x="38.5" y="248"/>
+            <point key="canvasLocation" x="38.5" y="212"/>
         </customView>
     </objects>
 </document>

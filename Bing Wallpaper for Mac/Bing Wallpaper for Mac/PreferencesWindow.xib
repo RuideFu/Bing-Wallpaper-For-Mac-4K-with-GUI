@@ -57,11 +57,11 @@
                         </textFieldCell>
                     </textField>
                     <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="Rwj-wV-XQ9">
-                        <rect key="frame" x="208" y="58" width="42" height="25"/>
+                        <rect key="frame" x="213" y="58" width="42" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </switch>
                     <button verticalHuggingPriority="750" id="Fv6-Hh-PlD">
-                        <rect key="frame" x="179" y="13" width="76" height="32"/>
+                        <rect key="frame" x="196" y="13" width="76" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Nxg-pY-co8">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -75,7 +75,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mm9-ht-RMj">
-                        <rect key="frame" x="50" y="13" width="75" height="32"/>
+                        <rect key="frame" x="35" y="13" width="75" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pqa-Wz-uRf">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
