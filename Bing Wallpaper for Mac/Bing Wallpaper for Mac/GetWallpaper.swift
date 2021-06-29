@@ -15,22 +15,20 @@ class WallpaperApi {
     
 
     
-    func fetchMeta(index: Int, language: String, success: @escaping (Wallpaper) -> Void){
-        NSLog("Start fetching (index \(index))")
+    func fetchMeta(index: Int, language: String, completeHandeler: @escaping (Wallpaper) -> Void){
         let metaURL = "\(metaURLpt1)\(index)\(metaURLpt2)\(language)\(metaURLpt3)"
         let myurl = URL(string: metaURL)!
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 3.0
         let request = URLRequest(url: myurl)
         let session = URLSession(configuration: config)
-        NSLog("Session time \(config.timeoutIntervalForRequest)")
         let task = session.dataTask(with: request, completionHandler: { (data, response, err) in
             let httpResponse = response as? HTTPURLResponse
             if httpResponse?.statusCode == 200 {
                 let image = self.wallpaperFromJSON(data: data!)
-                success(image)
+                completeHandeler(image)
             } else {
-                success(Wallpaper.init())
+                completeHandeler(Wallpaper.init())
                 NSLog("fetch meta (index \(index)) failed")
             }
             
@@ -38,27 +36,20 @@ class WallpaperApi {
         task.resume()
     }
     
-    func fetchImage(url: URL, path: String, completionHandler: @escaping () -> Void){
+    func fetchImage(url: URL, completionHandler: @escaping (_ tempURL: URL) -> Void){
         let task = URLSession.shared.downloadTask(with: url) {localURL, urlResponse, error in
             let httpResponse = urlResponse as? HTTPURLResponse
             if httpResponse?.statusCode == 200 {
-                do {
-                    try FileManager.default.moveItem(atPath: localURL!.path, toPath: path)
-                    completionHandler()
-                } catch {
-                    print(error)
-                }
+                completionHandler(localURL!)
             } else {
                 NSLog("fetch image failed")
             }
         }
         task.resume()
-            
     }
     
     
     func wallpaperFromJSON(data: Data)->Wallpaper{
-        
         do {
             //customize decoder
             let decoder = JSONDecoder();
@@ -69,8 +60,14 @@ class WallpaperApi {
             let result = try decoder.decode(Bingfeedback.self, from: data)
             return result.images[0]
         } catch {
-            NSLog("JSON Parsing fialed: \(error)")
-            return Wallpaper()
+            do {
+                let decoder = JSONDecoder();
+                let result = try decoder.decode(Wallpaper.self, from: data)
+                return result
+            } catch {
+                NSLog("JSON Parsing failed: \(error)")
+                return Wallpaper()
+            }
         }
 
     }

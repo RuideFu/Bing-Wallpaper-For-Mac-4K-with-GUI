@@ -24,14 +24,17 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     
     var wallpaperAPI = WallpaperApi()
     
-    var file = fileManage();
+    var file = cacheManager();
     
     var preferencesWindow: PreferencesWindow!
     
     let minIndex = 0
+    var today = Date.init()
     var maxIndex = 5
     var DEFAULT_MAX = "5"
     var currIndex = 0
+    
+    var bingDesktops: [NSScreen] = []
     
     let lang = "en"
     
@@ -53,6 +56,22 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
         update()
+    }
+    
+    @IBAction func removeClicked(_ sender: NSMenuItem) {
+        let screen = NSScreen.main
+        let defaultWallpaper = URL.init(fileURLWithPath: "/System/Library/Desktop Pictures/Big Sur.heic")
+        if bingDesktops.contains(screen!) {
+            bingDesktops.remove(at: bingDesktops.firstIndex(of: screen!)!)
+            do {
+            try NSWorkspace().setDesktopImageURL(defaultWallpaper, for: screen!, options: [:])
+            } catch {
+                NSLog("Reset Failed")
+            }
+        } else {
+            NSLog("No need to reset")
+        }
+        
     }
     
     @IBAction func moreClicked(_ sender: NSButton) {
@@ -94,9 +113,48 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     }
     
     func reload(index: Int, language: String, left: Bool?){
+        // deactivate buttons
         self.buttonDeactivate()
-        wallpaperAPI.fetchMeta(index: index, language: language){ [self]wallpaper in
-            if wallpaper.err != nil {
+        //acquire metadata
+        //fetch meta
+        wallpaperAPI.fetchMeta(index: index, language: language){
+            [self]wallpaper in
+            //fetch meta complete handeler
+            var metaBool: Bool
+            var meta: Wallpaper
+            if wallpaper.err == nil {
+                //Store metadata to cache
+                file.storMeta(meta: wallpaper)
+                //cache date at index 0
+                if currIndex == 0{
+                    today = wallpaper.startdate
+                }
+                metaBool = true
+                meta = wallpaper
+            } else {
+                //fetch meta failed
+                //read meta from cache
+                let lookupDate = today.addingTimeInterval(TimeInterval(-24*60*60*(currIndex)))
+                meta = file.readMeta(date: lookupDate)
+                metaBool = (meta.err == nil)
+            }
+            //metadata is acquired
+            if metaBool {
+                //update information in popup
+                self.wallpaperView.update(meta: meta)
+                //change wallpaper on desktop
+                let workspace = NSWorkspace.shared
+                let screen = NSScreen.main
+                if !bingDesktops.contains(screen!) {
+                    bingDesktops.append(screen!)
+                }
+                file.setImage(meta: meta, workspace: workspace, screen: screen!, completionHandeler: {
+                    DispatchQueue.main.async {
+                        self.buttonCtrl()
+                    }
+                })
+            //metadata acquisition failed
+            } else {
                 self.wallpaperView.error()
                 DispatchQueue.main.async {
                     if left == true {
@@ -104,16 +162,6 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                     } else if left == false {
                         currIndex += 1
                     }
-                    self.buttonCtrl()
-                }
-            } else {
-                //change wallpaper on desktop
-                let workspace = NSWorkspace.shared
-                let screen = NSScreen.main
-                file.setImage(meta: wallpaper, workspace: workspace, screen: screen!)
-                //update information in popup
-                self.wallpaperView.update(meta: wallpaper)
-                DispatchQueue.main.async {
                     self.buttonCtrl()
                 }
             }
@@ -146,7 +194,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
-        file.cleanImages(maxIndex: maxIndex, language: lang)
+        file.cleanCache(maxIndex: maxIndex, language: lang)
     }
     
     func preferencesDidUpdate() {
