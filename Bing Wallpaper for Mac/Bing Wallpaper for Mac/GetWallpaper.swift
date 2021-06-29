@@ -17,21 +17,29 @@ class WallpaperApi {
     
     func fetchMeta(index: Int, language: String, completeHandeler: @escaping (Wallpaper) -> Void){
         let metaURL = "\(metaURLpt1)\(index)\(metaURLpt2)\(language)\(metaURLpt3)"
+        NSLog(metaURL)
         let myurl = URL(string: metaURL)!
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 3.0
-        let request = URLRequest(url: myurl)
         let session = URLSession(configuration: config)
-        let task = session.dataTask(with: request, completionHandler: { (data, response, err) in
-            let httpResponse = response as? HTTPURLResponse
-            if httpResponse?.statusCode == 200 {
-                let image = self.wallpaperFromJSON(data: data!)
-                completeHandeler(image)
-            } else {
+        let task = session.dataTask(with: myurl, completionHandler: { (data, response, err) in
+            if let error = err{
                 completeHandeler(Wallpaper.init())
-                NSLog("fetch meta (index \(index)) failed")
+                NSLog("Fetching Meta (index \(index)) Failed \(error)")
+            } else {
+                let httpResponse = response as? HTTPURLResponse
+                if httpResponse!.statusCode == 200 {
+                    var image = self.wallpaperFromJSON(data: data!)
+                    if image.title == "" {
+                        NSLog("Meta info is not complete")
+                        image = Wallpaper.init()
+                    }
+                    completeHandeler(image)
+                } else {
+                    completeHandeler(Wallpaper.init())
+                    NSLog("Parsing Meta (index \(index)) failed")
+                }
             }
-            
         })
         task.resume()
     }
@@ -66,7 +74,7 @@ class WallpaperApi {
                 return result
             } catch {
                 NSLog("JSON Parsing failed: \(error)")
-                return Wallpaper()
+                return Wallpaper.init()
             }
         }
 
