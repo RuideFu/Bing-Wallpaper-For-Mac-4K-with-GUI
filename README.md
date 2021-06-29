@@ -1,5 +1,5 @@
 # Bing-Wallpaper-For-Mac-4K-with-GUI
-![logo](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/main/icon.png)
+![logo](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/main/media/icon.png)
 
 A desktop client (menubar app) of Bing Wallpaper for mac, written in swift.
 
@@ -26,6 +26,8 @@ It's signed with developer ID. Hence during installation, please authorize the a
 ## A Little Help to Get Started <a name="manual"></a>
 When the app is opened, the icon will appear in the menubar on top of the screen. Click the icon to open the drop-down menu.
 
+![screenshot](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/main/media/screenShot.png)
+
 Let me explain those buttons:
 * __Preferences__, __Github__, __Quit__: self-explanatory
 * __<<__ & __>>__ on the top: navigate through different wallpapers
@@ -37,13 +39,14 @@ Let me explain those buttons:
 * __Reset__:
   * exclude current active screen from the management of auto update (if enabled)
   * change wallpaper to system default (the big sur one)
+* Between two rows of buttons, it's the title of the wallpaper
 
 _Now Rock with Bing Wallpapers!_
 
 ## Contact Author <a name="author"></a>
 
-Any question, suggestion, constructive criticism are welcomed!
+All questions, suggestions, constructive criticisms are welcomed!
 
 Feel free to open an issue or pull request.
 
-Or email me at rfugithub@outlook.com (call me RD is fine), English and Chinese are equally prefered.
+Or [email](mailto:rfugithub@outlook.com) me at rfugithub@outlook.com (call me RD is fine), English and Chinese are equally prefered.
