@@ -33,6 +33,12 @@
                         <action selector="updateClicked:" target="FD8-XB-b7y" id="Ybl-am-s94"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Remove" id="70F-Ff-VXI">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="removeClicked:" target="FD8-XB-b7y" id="CyA-bh-zq8"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="NKG-bO-Ryr"/>
                 <menuItem tag="1" id="SZH-aD-gGv">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -97,7 +103,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nZx-pr-LXa">
-                    <rect key="frame" x="18" y="45" width="164" height="45"/>
+                    <rect key="frame" x="18" y="38" width="164" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" selectable="YES" title="Click Update to Load Image Information" id="WSK-rd-lap">
                         <font key="font" metaFont="system"/>
@@ -109,7 +115,7 @@
             <connections>
                 <outlet property="titleTextField" destination="nZx-pr-LXa" id="jTA-M9-UvN"/>
             </connections>
-            <point key="canvasLocation" x="39" y="248"/>
+            <point key="canvasLocation" x="38.5" y="248"/>
         </customView>
     </objects>
 </document>

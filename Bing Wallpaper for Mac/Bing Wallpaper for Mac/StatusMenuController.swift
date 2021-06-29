@@ -34,6 +34,8 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     var DEFAULT_MAX = "5"
     var currIndex = 0
     
+    var bingDesktops: [NSScreen] = []
+    
     let lang = "en"
     
     override func awakeFromNib() {
@@ -54,6 +56,22 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
         update()
+    }
+    
+    @IBAction func removeClicked(_ sender: NSMenuItem) {
+        let screen = NSScreen.main
+        let defaultWallpaper = URL.init(fileURLWithPath: "/System/Library/Desktop Pictures/Big Sur.heic")
+        if bingDesktops.contains(screen!) {
+            bingDesktops.remove(at: bingDesktops.firstIndex(of: screen!)!)
+            do {
+            try NSWorkspace().setDesktopImageURL(defaultWallpaper, for: screen!, options: [:])
+            } catch {
+                NSLog("Reset Failed")
+            }
+        } else {
+            NSLog("No need to reset")
+        }
+        
     }
     
     @IBAction func moreClicked(_ sender: NSButton) {
@@ -127,6 +145,9 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                 //change wallpaper on desktop
                 let workspace = NSWorkspace.shared
                 let screen = NSScreen.main
+                if !bingDesktops.contains(screen!) {
+                    bingDesktops.append(screen!)
+                }
                 file.setImage(meta: meta, workspace: workspace, screen: screen!, completionHandeler: {
                     DispatchQueue.main.async {
                         self.buttonCtrl()
