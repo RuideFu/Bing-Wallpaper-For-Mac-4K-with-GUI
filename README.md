@@ -1,18 +1,49 @@
 # Bing-Wallpaper-For-Mac-4K-with-GUI
 ![logo](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/blob/main/icon.png)
 
-A desktop client of Bing Wallpaper for mac, written in swift.
+A desktop client (menubar app) of Bing Wallpaper for mac, written in swift.
 
-Currently in the early stage of developing, signing and compiled app installation are _NOT_ available.
+An alpha version of the app is released. Install 
+[here](https://github.com/RuideFu/Bing-Wallpaper-For-Mac-4K-with-GUI/releases/download/v1.0-alpha/Bing.Wallpaper.for.Mac.-alpha.dmg)
+.
 
-## Implemented Features:
+It's signed with developer ID. Hence during installation, please authorize the app in System Preference -> Secuirty & Privacy -> General.
 
-* Fetch metadata of wallpaper from Bing
-* Basic Menubar UI: wallpaper title, change wallpaper, link to homepage quiz. preferences, quit
-* Replacing wallpaper of the desktop that user is on when clicking _update_ in the app
-* Basic caching and cleaning
-* Allowance for customize the maximum number of wallpaper browsing and cching
+## Table of Contents
+1. [Implemented Features](#features)
+2. [A Little Help to Get Started](#manual)
+3. [Contact Author](#author)
 
-## Features _NOT_ Tested:
+## Implemented Features: <a name="features"></a>
 
-* Run without internet
+* Fetch wallpaper and image information from Bing
+* Set wallpaper for the active screen
+* Display wallpaper title in menu, and _More_ button leads to the Bing Quiz!
+* Daily Fresh at 2 a.m. (Can be turned off)
+* Browse and choose from up to 10 wallpapers from past. (Can change the maximum numbers in the preference)
+* Cache metadata and image file for offline useage and improve performance.
+
+## A Little Help to Get Started <a name="manual"></a>
+When the app is opened, the icon will appear in the menubar on top of the screen. Click the icon to open the drop-down menu.
+
+Let me explain those buttons:
+* __Preferences__, __Github__, __Quit__: self-explanatory
+* __<<__ & __>>__ on the top: navigate through different wallpapers
+* __More__: open Bing Quiz in your default browser
+* __Update__: 
+  * manually update for current active screen
+  * change wallpaper to the most recent one
+  * include current active screen to the management of auto update (enabled by default)
+* __Reset__:
+  * exclude current active screen from the management of auto update (if enabled)
+  * change wallpaper to system default (the big sur one)
+
+_Now Rock with Bing Wallpapers!_
+
+## Contact Author <a name="author"></a>
+
+Any question, suggestion, constructive criticism are welcomed!
+
+Feel free to open an issue or pull request.
+
+Or email me at rfugithub@outlook.com (call me RD is fine), English and Chinese are equally prefered.
