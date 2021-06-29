@@ -34,6 +34,8 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     var DEFAULT_MAX = "5"
     var currIndex = 0
     
+    var autoRun: Timer?
+    var DEFAULT_REFRESH = "1"
     var bingDesktops: [NSScreen] = []
     
     let lang = "en"
@@ -50,12 +52,14 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
+        scheduleCtrl()
         self.buttonCtrl()
     }
 
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
-        update()
+        print("DEBUG\(NSScreen.main!)")
+        update(screen: NSScreen.main!)
     }
     
     @IBAction func removeClicked(_ sender: NSMenuItem) {
@@ -85,7 +89,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     @IBAction func leftClicked(_ sender: NSButton) {
         if currIndex < maxIndex - 1{
             currIndex += 1
-            reload(index: currIndex, language: lang, left: true)
+            reload(index: currIndex, language: lang, screen: NSScreen.main!, left: true)
         }
     }
     
@@ -93,7 +97,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
     @IBAction func rightClicked(_ sender: NSButton) {
         if currIndex > minIndex{
             currIndex -= 1
-            reload(index: currIndex, language: lang, left: false)
+            reload(index: currIndex, language: lang, screen: NSScreen.main!, left: false)
         }
     }
     
@@ -112,7 +116,7 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         NSApplication.shared.terminate(self)
     }
     
-    func reload(index: Int, language: String, left: Bool?){
+    func reload(index: Int, language: String, screen: NSScreen, left: Bool?){
         // deactivate buttons
         self.buttonDeactivate()
         //acquire metadata
@@ -144,11 +148,10 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
                 self.wallpaperView.update(meta: meta)
                 //change wallpaper on desktop
                 let workspace = NSWorkspace.shared
-                let screen = NSScreen.main
-                if !bingDesktops.contains(screen!) {
-                    bingDesktops.append(screen!)
+                if !bingDesktops.contains(screen) {
+                    bingDesktops.append(screen)
                 }
-                file.setImage(meta: meta, workspace: workspace, screen: screen!, completionHandeler: {
+                file.setImage(meta: meta, workspace: workspace, screen: screen, completionHandeler: {
                     DispatchQueue.main.async {
                         self.buttonCtrl()
                     }
@@ -188,16 +191,48 @@ class StatusMenuController: NSObject, PreferencesWindowDelegate {
         moreButton.isEnabled = false
     }
     
-    func update(){
+    func update(screen: NSScreen){
         currIndex = 0
-        reload(index: currIndex, language: lang, left: nil)
+        reload(index: currIndex, language: lang, screen: screen, left: nil)
         let defaults = UserDefaults.standard
         let maxIndexStr = defaults.string(forKey: "max") ?? DEFAULT_MAX
         maxIndex = Int(maxIndexStr)!
         file.cleanCache(maxIndex: maxIndex, language: lang)
     }
     
+    @objc func updateAll(){
+        if !bingDesktops.isEmpty {
+            for screen in bingDesktops{
+                update(screen: screen)
+            }
+        } else {
+            NSLog("No desktop is set up for auto update")
+        }
+        
+    }
+    
+    func scheduleUpdate()->Timer{
+        let calender = Calendar.current
+        let startOfToday = calender.startOfDay(for: Date())
+        let date = calender.date(bySettingHour: 2, minute: 00, second: 0, of: startOfToday)!
+        let timer = Timer(fireAt: date, interval: TimeInterval(24*60*60), target: self, selector:  #selector(updateAll), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
+        return timer
+    }
+    
+    func scheduleCtrl() {
+        let defaults = UserDefaults.standard
+        let isAutoUpdate = defaults.string(forKey: "refresh") ?? DEFAULT_REFRESH
+        if isAutoUpdate == "1" {
+            autoRun = scheduleUpdate()
+        } else {
+            autoRun?.invalidate()
+            autoRun = nil
+        }
+    }
+    
     func preferencesDidUpdate() {
-        update()
+        updateAll()
+        scheduleCtrl()
     }
 }
