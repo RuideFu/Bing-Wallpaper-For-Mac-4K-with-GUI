@@ -53,4 +53,4 @@ All questions, suggestions, constructive criticisms are welcomed!
 
 Feel free to open an issue or pull request.
 
-Or [email](mailto:rfugithub@outlook.com) me at rfugithub@outlook.com (call me RD is fine), English and Chinese are equally prefered.
+Or [email](mailto:rfugithub@outlook.com) me at rfugithub@outlook.com, English and Chinese are equally prefered.
